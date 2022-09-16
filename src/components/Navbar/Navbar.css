@@ -1,0 +1,21 @@
+.nav-bar{
+    top: 0;
+    padding: 15px;
+    padding-bottom: 45px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 5px 5px #f7f7f7;
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+}
+.nav-links ul{
+    display: flex;
+    justify-content: space-between;
+}
+.nav-links ul li{
+    top: 0;
+    padding-left: 15px;
+}
