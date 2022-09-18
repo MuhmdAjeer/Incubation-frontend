@@ -8,8 +8,8 @@ const Navbar = () => {
             <h1>Incubation</h1>
             <div className="nav-links">
                 <ul>
-                    <li>Home</li>
-                    <li>Signup</li>
+                    <li className='hover:text-gray-500 hover:cursor-pointer' >Home</li>
+                    <li className='hover:text-gray-500 hover:cursor-pointer' >Signup</li>
                 </ul>
             </div>
         </div>

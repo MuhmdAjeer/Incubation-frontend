@@ -2,7 +2,10 @@
 import './App.css';
 import axios from 'axios'
 import { Fragment, useEffect, useState } from 'react';
+import {BrowserRouter,Route, Routes} from 'react-router-dom'
 import Login from './pages/Login';
+import Signup from './pages/Signup'
+
 
 function App() {
   const [api, setapi] = useState('');
@@ -15,7 +18,13 @@ function App() {
   },[])
   return (
     <Fragment>
-      <Login/>
+      <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Login/>}/> 
+        <Route path='Signup' element={<Signup/>}/>
+
+      </Routes>
+      </BrowserRouter>
     </Fragment>
   );
 }

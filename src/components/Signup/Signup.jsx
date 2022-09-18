@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import {useNavigate} from 'react-router-dom' 
+import "./Signup.css";
 import axios from '../../constants/axios';
 
 const validate = (values) => {
@@ -17,20 +17,25 @@ const validate = (values) => {
   ){
     errors.email = 'Invalid email'
   }
+  if(!values.name) errors.name = 'Required'
   if(values.password.length < 8) errors.password = 'Minimum of 8 characters required'
+  if(values.confirmPassword === '') errors.confirmPassword = 'Re-enter the password'
+  if(values.password !== values.confirmPassword) errors.confirmPassword = 'Passwords must be same'
     return errors;
 };
-const Login = () => {
+const Signup = () => {
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
+      name : "",
       email: "",
       password: "",
+      confirmPassword:""
     },
     validate,
     onSubmit: (values) => {
-      axios.post('/login', values).then((response) => {
-        console.log(response);
+      axios.post("/login", values).then((response) => {
+        console.log(response.data);
       });
     },
   });
@@ -42,12 +47,42 @@ const Login = () => {
             className="login-header font-extrabold"
             style={{ fontSize: "24px" }}
           >
-            User Login
+            User Signup
           </h1>
-          <h6>Hey,Enter your details to get sign in to your account</h6>
+          <h6>Hey,Create an account and get signed in</h6>
         </div>
 
         <form className="input-box p-2" onSubmit={formik.handleSubmit}>
+
+        {formik.errors.name && formik.touched.name ? (
+            <TextField
+              sx={{ marginTop: 2 }}
+              
+              id="name"
+              name="name"
+              label="Name"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              error
+              helperText={formik.errors.name}
+              variant="standard"
+            />
+          ) : (
+            <TextField
+              sx={{ marginTop: 2 }}
+             
+              id="name"
+              name="name"
+              label="Name"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              variant="standard"
+            />
+          )}
+
+
           {/* Email input  */}
           {formik.errors.email && formik.touched.email ? (
             <TextField
@@ -106,16 +141,44 @@ const Login = () => {
             />
           )}
 
+          {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+            <TextField
+              sx={{ marginTop: 2 }}
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              label="Confirm Password"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.confirmPassword}
+              error
+              helperText={formik.errors.confirmPassword}
+              variant="standard"
+            />
+          ) : (
+            <TextField
+              sx={{ marginTop: 2 }}
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              label="confirmPassword"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.confirmPassword}
+              variant="standard"
+            />
+          )}
+
           <Button type="submit" sx={{ mt: 2 }} variant="contained">
             Login
           </Button>
         </form>
-        <p onClick={()=>navigate('/Signup')}  className="text-center hover:text-black hover:cursor-pointer text-gray-700 pt-2">
-          Dont have an account? Create one
+        <p onClick={()=>navigate('/')} className="text-center hover:text-black hover:cursor-pointer text-gray-700 pt-2">
+          Already have an account? Login
         </p>
       </div>
     </Fragment>
   );
 };
 
-export default Login;
+export default Signup;
