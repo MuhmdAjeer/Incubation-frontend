@@ -1,9 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment,useContext } from "react";
 import { TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
 import {useNavigate} from 'react-router-dom' 
 import "./Signup.css";
 import axios from '../../constants/axios';
+import { AuthContext } from "../../Contexts/AuthContext";
+
 
 const validate = (values) => {
   const errors = {};
@@ -24,6 +26,7 @@ const validate = (values) => {
     return errors;
 };
 const Signup = () => {
+  const {signup,error} = useContext(AuthContext)
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -34,9 +37,7 @@ const Signup = () => {
     },
     validate,
     onSubmit: (values) => {
-      axios.post("/login", values).then((response) => {
-        console.log(response.data);
-      });
+      signup(values)
     },
   });
   return (
@@ -53,7 +54,7 @@ const Signup = () => {
         </div>
 
         <form className="input-box p-2" onSubmit={formik.handleSubmit}>
-
+        {error && <p className="text-red-600" >{error}</p>}
         {formik.errors.name && formik.touched.name ? (
             <TextField
               sx={{ marginTop: 2 }}
